@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Sistema "brutalist editorial": lienzo gris cálido, superficies planas blanco/negro,
+   display condensado en mayúsculas y acentos mint/amarillo solo en elementos pequeños. */
+@theme {
+  --color-canvas: #e5e5e5;
+  --color-paper: #ffffff;
+  --color-carbon: #000000;
+  --color-mist: #f3f3f3;
+  --color-ash: #c6c6c6;
+  --color-smoke: #979797; /* solo sobre negro: no pasa contraste sobre claro */
+  --color-slate: #444444;
+  --color-graphite: #2f2f2f;
+  --color-mint: #d1ffca;
+  --color-volt: #fff100;
+  --color-error: #b3261e;
+
+  --font-display: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-card: 32px;
+  --radius-arc: 64px;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: var(--color-canvas);
+    color: var(--color-carbon);
+    font-family: var(--font-sans);
+    letter-spacing: -0.011em;
+  }
+
+  button,
+  [role="button"],
+  select {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-volt);
+    color: var(--color-carbon);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Títulos display: condensado, mayúsculas, interlineado 0.9 */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+
+/* Etiqueta técnica en mono */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+/* Animación del hero: un lead recorre Anuncio → WhatsApp → CRM → Dashboard (ciclo de 8s).
+   --on va de 0 a 1 en cada paso y los hijos lo usan para encenderse. */
+@property --on {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes flow-step-0 { 0%, 1% { --on: 0 } 4%, 92% { --on: 1 } 96%, 100% { --on: 0 } }
+@keyframes flow-step-1 { 0%, 24% { --on: 0 } 27%, 92% { --on: 1 } 96%, 100% { --on: 0 } }
+@keyframes flow-step-2 { 0%, 49% { --on: 0 } 52%, 92% { --on: 1 } 96%, 100% { --on: 0 } }
+@keyframes flow-step-3 { 0%, 74% { --on: 0 } 77%, 92% { --on: 1 } 96%, 100% { --on: 0 } }
+
+@keyframes flow-dot {
+  0% { transform: translateY(0); opacity: 0; }
+  3%, 10% { transform: translateY(0); opacity: 1; }
+  25%, 35% { transform: translateY(calc(var(--row) * 1)); }
+  50%, 60% { transform: translateY(calc(var(--row) * 2)); }
+  75%, 90% { transform: translateY(calc(var(--row) * 3)); opacity: 1; }
+  95%, 100% { transform: translateY(calc(var(--row) * 3)); opacity: 0; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .flow-step {
+    animation: none !important;
+    --on: 1;
+  }
+  .flow-dot,
+  .pulse-dot {
+    animation: none !important;
+  }
+  .flow-dot {
+    opacity: 0;
+  }
 }

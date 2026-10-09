@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# dyty.dev
 
-## Getting Started
+Sitio de dyty: Next.js 16 (App Router) + Tailwind CSS 4, en español, listo para desplegar en Dokploy con Docker.
 
-First, run the development server:
+## Desarrollo
 
 ```bash
+cp .env.example .env.local
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estructura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/lib/site.ts`: textos del negocio (servicios, casos, paquetes, WhatsApp). Los valores entre `[corchetes]` están pendientes.
+- `src/components/`: secciones de la landing.
+- `src/app/actions.ts`: Server Action del formulario. Envía el lead en JSON a `LEAD_WEBHOOK_URL`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy en Dokploy
 
-## Learn More
+1. Crea una aplicación en Dokploy y conéctala a este repositorio.
+2. Build type: **Dockerfile** (ruta `./Dockerfile`).
+3. Variables:
+   - **Build Args:** `NEXT_PUBLIC_WHATSAPP_NUMBER` (se incrusta en el build).
+   - **Environment:** `LEAD_WEBHOOK_URL`.
+4. Puerto del contenedor: `3000`.
+5. En Domains, agrega `dyty.dev` (y `www.dyty.dev` con redirección) y activa HTTPS con Let's Encrypt.
 
-To learn more about Next.js, take a look at the following resources:
+Prueba local de la imagen:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+docker build --build-arg NEXT_PUBLIC_WHATSAPP_NUMBER=5215512345678 -t dyty-page .
+docker run -p 3000:3000 -e LEAD_WEBHOOK_URL=https://... dyty-page
+```

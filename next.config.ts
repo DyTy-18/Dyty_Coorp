@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Genera .next/standalone para la imagen Docker (Dokploy)
+  output: "standalone",
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
