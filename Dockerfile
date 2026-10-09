@@ -19,7 +19,8 @@ COPY . .
 ARG NEXT_PUBLIC_WHATSAPP_NUMBER
 ENV NEXT_PUBLIC_WHATSAPP_NUMBER=$NEXT_PUBLIC_WHATSAPP_NUMBER
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+# public/ puede no existir en el repo (git no guarda carpetas vacías)
+RUN mkdir -p public && npm run build
 
 # --- Runtime ---
 FROM base AS runner
