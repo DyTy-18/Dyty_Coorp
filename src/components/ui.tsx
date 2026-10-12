@@ -10,7 +10,7 @@ const variants = {
 type Variant = keyof typeof variants;
 
 export function buttonClass(variant: Variant = "dark", extra = "") {
-  return `inline-flex min-h-12 items-center justify-center gap-2 px-6 text-base font-medium transition-colors duration-150 ${variants[variant]} ${extra}`;
+  return `inline-flex min-h-12 items-center justify-center gap-2 px-6 text-base font-medium transition-[color,background-color,border-color,scale] duration-150 ease-out active:scale-[0.97] ${variants[variant]} ${extra}`;
 }
 
 export function ButtonLink({ variant = "dark", className = "", ...props }: ComponentProps<"a"> & { variant?: Variant }) {

@@ -1,5 +1,6 @@
 import { ArrowUpRight, Check } from "lucide-react";
 import { cases, plans, services, tools, whatsappLink } from "@/lib/site";
+import { ServiceScene } from "./service-scenes";
 import { ButtonLink, Tag } from "./ui";
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
@@ -16,7 +17,7 @@ export function Statement() {
             ))}
           </ul>
         </div>
-        <p className="mt-16 max-w-5xl text-[clamp(1.75rem,3.4vw,2.5rem)] leading-[1.1] font-[450] tracking-[-0.02em] uppercase">
+        <p data-reveal="words" className="mt-16 max-w-5xl text-[clamp(1.75rem,3.4vw,2.5rem)] leading-[1.1] font-[450] tracking-[-0.02em] uppercase">
           Convertimos anuncios, chats de WhatsApp y hojas de Excel en un sistema que vende{" "}
           <span className="text-slate">y que puedes medir.</span>
         </p>
@@ -30,32 +31,35 @@ export function Services() {
     <section id="servicios" className="bg-paper">
       <div className="mx-auto max-w-[1200px] px-4 pb-20 md:px-6 md:pb-24">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <h2 className="display text-[clamp(3rem,7vw,5rem)]">Servicios</h2>
+          <h2 data-reveal="title" className="display text-[clamp(3rem,7vw,5rem)]">Servicios</h2>
           <p className="max-w-sm text-slate">Siete piezas que se conectan entre sí. Empieza por una y suma las demás.</p>
         </div>
 
-        <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <ul data-reveal="stagger" className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => {
             const dark = s.wide;
             return (
               <li
                 key={s.title}
-                className={`flex min-h-64 flex-col justify-between gap-8 rounded-[32px] p-6 md:p-8 ${
+                className={`flex flex-col gap-8 rounded-[32px] p-6 md:p-8 ${
                   dark ? "bg-carbon text-paper md:col-span-2" : "bg-canvas"
                 }`}
               >
-                <div>
-                  <span className={`label-mono ${dark ? "text-smoke" : "text-slate"}`}>[{pad(i)}]</span>
-                  <h3 className="mt-4 text-[28px] leading-[1.1] font-[450] tracking-[-0.03em] uppercase">{s.title}</h3>
-                  <p className={`mt-4 max-w-md ${dark ? "text-smoke" : "text-slate"}`}>{s.description}</p>
+                <ServiceScene scene={s.scene} dark={dark} />
+                <div className="flex flex-1 flex-col justify-between gap-8">
+                  <div>
+                    <span className={`label-mono ${dark ? "text-smoke" : "text-slate"}`}>[{pad(i)}]</span>
+                    <h3 className="mt-4 text-[28px] leading-[1.1] font-[450] tracking-[-0.03em] uppercase">{s.title}</h3>
+                    <p className={`mt-4 max-w-md ${dark ? "text-smoke" : "text-slate"}`}>{s.description}</p>
+                  </div>
+                  {s.cases.length > 0 && (
+                    <p className="flex flex-wrap gap-2">
+                      {s.cases.map((c) => (
+                        <Tag key={c}>{c}</Tag>
+                      ))}
+                    </p>
+                  )}
                 </div>
-                {s.cases.length > 0 && (
-                  <p className="flex flex-wrap gap-2">
-                    {s.cases.map((c) => (
-                      <Tag key={c}>{c}</Tag>
-                    ))}
-                  </p>
-                )}
               </li>
             );
           })}
@@ -70,7 +74,7 @@ export function Cases() {
     <section id="casos" className="bg-carbon text-paper">
       <div className="mx-auto max-w-[1200px] px-4 py-20 md:px-6 md:py-24">
         <div className="flex flex-wrap items-end justify-between gap-8">
-          <h2 className="display max-w-3xl text-[clamp(3rem,7vw,5rem)]">Sistemas que ya están operando</h2>
+          <h2 data-reveal="title" className="display max-w-3xl text-[clamp(3rem,7vw,5rem)]">Sistemas que ya están operando</h2>
           <ButtonLink
             variant="light"
             href={whatsappLink("Hola dyty, vi sus casos y quiero algo parecido para mi negocio.")}
@@ -82,7 +86,7 @@ export function Cases() {
           </ButtonLink>
         </div>
 
-        <ol className="mt-14">
+        <ol data-reveal="stagger" className="mt-14">
           {cases.map((c, i) => (
             <li
               key={c.client}
@@ -104,17 +108,17 @@ export function Plans() {
   return (
     <section id="paquetes" className="mx-auto max-w-[1200px] px-4 py-20 md:px-6 md:py-24">
       <div className="flex flex-wrap items-end justify-between gap-6">
-        <h2 className="display text-[clamp(3rem,7vw,5rem)]">Paquetes</h2>
+        <h2 data-reveal="title" className="display text-[clamp(3rem,7vw,5rem)]">Paquetes</h2>
         <p className="max-w-sm text-slate">Cada paquete crece hacia el siguiente. No tienes que rehacer nada.</p>
       </div>
 
-      <ul className="mt-12 flex flex-wrap gap-4">
+      <ul data-reveal="stagger" className="mt-12 flex flex-wrap gap-4">
         {plans.map((p) => {
           const dark = p.featured;
           return (
             <li
               key={p.name}
-              className={`flex flex-[1_1_300px] flex-col rounded-[32px] p-6 md:p-8 ${dark ? "bg-carbon text-paper" : "bg-paper"}`}
+              className={`flex flex-[1_1_300px] flex-col rounded-[32px] p-6 transition-[translate] duration-200 ease-out motion-safe:hover:-translate-y-1 md:p-8 ${dark ? "bg-carbon text-paper" : "bg-paper"}`}
             >
               <div className="flex items-start justify-between gap-4">
                 <h3 className="display text-5xl">{p.name}</h3>

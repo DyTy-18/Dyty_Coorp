@@ -31,6 +31,11 @@
     scroll-padding-top: 6rem;
   }
 
+  /* Con Lenis activo el scroll suave lo hace Lenis, no el navegador */
+  html.lenis {
+    scroll-behavior: auto;
+  }
+
   body {
     background: var(--color-canvas);
     color: var(--color-carbon);
@@ -95,6 +100,33 @@
   95%, 100% { transform: translateY(calc(var(--row) * 3)); opacity: 0; }
 }
 
+/* Entrada del hero al cargar. Es CSS para que no parpadee antes de hidratar. El título solo sube (sin opacidad)
+   para que se pinte desde el primer cuadro y no retrase el LCP. */
+@keyframes hero-rise {
+  from {
+    transform: translateY(var(--rise, 24px));
+    opacity: var(--from-opacity, 0);
+  }
+}
+
+.hero-in {
+  animation: hero-rise 800ms var(--ease-out) var(--d, 0ms) both;
+}
+
+.hero-title {
+  --rise: 40px;
+  --from-opacity: 1;
+}
+
+/* Cursor del bloque de código */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s steps(1) infinite;
+}
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
@@ -107,6 +139,10 @@
   .flow-step {
     animation: none !important;
     --on: 1;
+  }
+  .hero-in,
+  .cursor-blink {
+    animation: none;
   }
   .flow-dot,
   .pulse-dot {

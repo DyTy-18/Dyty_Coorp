@@ -24,8 +24,11 @@ export const nav = [
   { href: "#contacto", label: "Contacto" },
 ];
 
+export type Scene = "crm" | "leads" | "web" | "dashboard" | "payments" | "lms" | "hosting";
+
 export type Service = {
   title: string;
+  scene: Scene; // animación de la tarjeta (service-scenes.tsx)
   description: string;
   cases: string[];
   wide?: boolean;
@@ -34,6 +37,7 @@ export type Service = {
 export const services: Service[] = [
   {
     title: "CRM a medida + WhatsApp",
+    scene: "crm",
     description:
       "Reservas, clientes, comisiones, inventario, bot de WhatsApp y envíos masivos automatizados.",
     cases: ["Cristina Spa"],
@@ -41,18 +45,21 @@ export const services: Service[] = [
   },
   {
     title: "Captura y seguimiento de leads",
+    scene: "leads",
     description:
       "Meta Lead Ads que llegan solos al CRM, Pixel + Conversions API y UTMs para saber qué anuncio vende.",
     cases: [],
   },
   {
     title: "Sitios web que cargan rápido y posicionan",
+    scene: "web",
     description:
       "Webs corporativas con SEO técnico, Search Console y Core Web Vitals en verde.",
     cases: ["Otium"],
   },
   {
     title: "Dashboards y reportes de negocio",
+    scene: "dashboard",
     description:
       "Excel, CRM y plataformas en un solo panel: ventas, alumnos y rendimiento por sucursal. Power BI o dashboard web propio.",
     cases: ["Otium", "Cristina Spa"],
@@ -60,16 +67,19 @@ export const services: Service[] = [
   },
   {
     title: "Pagos en línea",
+    scene: "payments",
     description: "Cobros con tarjeta vía Stripe, integrados a tu sitio o sistema, también para clientes internacionales.",
     cases: [],
   },
   {
     title: "Plataformas educativas",
+    scene: "lms",
     description: "Integración y seguimiento de alumnos en LMS como LearnWorlds.",
     cases: [],
   },
   {
     title: "Hosting y mantenimiento",
+    scene: "hosting",
     description: "Alojamiento, actualizaciones, respaldos y monitoreo de tu sitio o sistema cada mes.",
     cases: [],
   },

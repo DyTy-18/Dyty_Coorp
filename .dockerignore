@@ -10,3 +10,7 @@ npm-debug.log*
 README.md
 .vscode
 .idea
+.claude
+docs
+CLAUDE.md
+AGENTS.md

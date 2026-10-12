@@ -9,7 +9,7 @@ export function Contact() {
       <div className="mx-auto flex max-w-[1200px] flex-wrap gap-12 px-4 py-20 md:px-6 md:py-24">
         <div className="flex-[1_1_320px]">
           <p className="label-mono text-slate">Contacto</p>
-          <h2 className="display mt-6 text-[clamp(3rem,7vw,5rem)]">Cuéntanos qué necesita tu negocio</h2>
+          <h2 data-reveal="title" className="display mt-6 text-[clamp(3rem,7vw,5rem)]">Cuéntanos qué necesita tu negocio</h2>
           <p className="mt-6 max-w-sm text-slate">
             Lo más rápido es WhatsApp. Si prefieres, deja tus datos y te escribimos nosotros.
           </p>
@@ -49,7 +49,7 @@ export function Footer() {
         </nav>
       </div>
 
-      <p aria-hidden="true" className="display mt-10 text-center text-[clamp(8rem,38vw,30rem)] leading-[0.8] select-none">
+      <p aria-hidden="true" data-reveal="title" className="display mt-10 text-center text-[clamp(8rem,38vw,30rem)] leading-[0.8] select-none">
         dyty
       </p>
 
