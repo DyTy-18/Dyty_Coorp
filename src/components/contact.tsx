@@ -55,7 +55,7 @@ export function Footer() {
 
       <div className="mx-auto flex max-w-[1200px] flex-wrap justify-between gap-4 border-t border-graphite px-4 py-6 md:px-6">
         <span className="label-mono text-smoke">© 2026 {site.domain}</span>
-        <span className="label-mono text-smoke">Hecho en LATAM</span>
+        <span className="label-mono text-smoke">Hecho en Bolivia</span>
       </div>
     </footer>
   );

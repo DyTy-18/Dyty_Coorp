@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "dyty — Webs, leads y CRM que trabajan juntos",
+    default: "dyty — Páginas web, leads y CRM en Bolivia",
     template: "%s · dyty",
   },
   description: site.description,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     locale: "es_419",
     url: site.url,
     siteName: site.name,
-    title: "dyty — Webs, leads y CRM que trabajan juntos",
+    title: "dyty — Páginas web, leads y CRM en Bolivia",
     description: site.description,
   },
 };

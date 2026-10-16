@@ -3,10 +3,10 @@ import { Tag } from "./ui";
 
 // Recorrido de un lead por el sistema. Solo CSS (keyframes en globals.css), sin JS.
 const steps = [
-  { icon: Megaphone, title: "Anuncio en Meta", detail: "Alguien toca “Enviar mensaje”" },
-  { icon: MessageCircle, title: "WhatsApp o formulario", detail: "El lead llega solo, con su UTM" },
-  { icon: SquareKanban, title: "CRM", detail: "Se asigna y se le da seguimiento" },
-  { icon: ChartColumn, title: "Dashboard", detail: "La venta se atribuye al anuncio" },
+  { icon: Megaphone, title: "Anuncio en Facebook o Instagram", detail: "Alguien toca “Enviar mensaje”" },
+  { icon: MessageCircle, title: "WhatsApp o formulario", detail: "El mensaje llega y queda anotado de qué anuncio vino" },
+  { icon: SquareKanban, title: "CRM", detail: "Alguien de tu equipo le da seguimiento" },
+  { icon: ChartColumn, title: "Reporte", detail: "Ves cuántas ventas trajo cada anuncio" },
 ];
 
 const ROW = 88; // alto de cada paso en px; el punto se mueve en múltiplos de esto
@@ -15,7 +15,7 @@ export function LeadFlow() {
   return (
     <div className="rounded-[32px] bg-carbon p-6 text-paper md:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <span className="label-mono text-smoke">Así viaja un lead</span>
+        <span className="label-mono text-smoke">Así llega un cliente</span>
         <span className="label-mono inline-flex items-center gap-2 text-smoke">
           <span className="pulse-dot size-2 rounded-full bg-volt [animation:pulse-dot_1.6s_ease-in-out_infinite]" />
           En vivo
@@ -72,7 +72,7 @@ export function LeadFlow() {
       >
         <span className="text-sm text-smoke">Resultado:</span>
         <span style={{ opacity: "calc(0.25 + var(--on) * 0.75)" }}>
-          <Tag>Venta atribuida · Campaña de Meta</Tag>
+          <Tag>Venta cerrada · vino de tu anuncio</Tag>
         </span>
       </div>
     </div>

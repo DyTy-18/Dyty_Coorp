@@ -2,8 +2,8 @@
 
 # dyty.dev
 
-Sitio de **dyty**: desarrollo y automatización para negocios en LATAM (CRM a medida + WhatsApp, captura de leads,
-webs con SEO, dashboards, pagos con Stripe, LMS, hosting). Todo el contenido y la comunicación con el usuario van en
+Sitio de **dyty**: desarrollo y automatización para negocios en Bolivia (y LATAM): CRM a medida + WhatsApp, captura de
+leads, webs con SEO, dashboards, LMS, hosting. Stripe se quitó por ahora (no opera para negocios en Bolivia). Todo el contenido y la comunicación con el usuario van en
 **español**.
 
 ## Comandos
@@ -100,22 +100,35 @@ Lo que manda en movimiento: `animate` → `emil-design-eng`. Reglas fijas:
 ## Contenido
 
 - No inventes cifras, testimonios ni clientes. Lo que falte va como placeholder entre corchetes: `[Desde $X USD]`.
-- Casos actuales: Cristina Spa y Otium. EXED y Rocket se quitaron a pedido del usuario: no los vuelvas a poner.
+- Casos actuales: Cristina Spa, Otium y MarKual (portafolio de fotografía). EXED y Rocket se quitaron a pedido del usuario: no los vuelvas a poner.
 - Pasa los textos nuevos por `humanizer` (que no suenen a IA).
 - Contacto principal: WhatsApp (`whatsappLink()`); el formulario es secundario.
 
 ## Formulario y leads
 
 `submitLead` valida en el servidor, devuelve `values` para no vaciar el formulario si hay errores (React 19
-resetea el form tras la acción) y manda el lead en JSON a `LEAD_WEBHOOK_URL`. Sin esa variable solo lo registra en
-los logs. Adjunta `utm_source`, `utm_medium` y `utm_campaign` de la URL. Tiene un campo trampa (`company_website`)
+resetea el form tras la acción), guarda el lead en `DATA_DIR/leads.jsonl` (`src/lib/leads.ts`) y, si existe
+`LEAD_WEBHOOK_URL`, también lo reenvía en JSON. Basta con que una de las dos cosas funcione. Las opciones de
+"¿Qué necesitas?" salen de `leadNeeds` en `site.ts`. Adjunta `utm_source`, `utm_medium` y `utm_campaign` de la URL. Tiene un campo trampa (`company_website`)
 contra bots.
+
+### Panel de leads (`/panel`)
+
+- Privado: no se enlaza desde el sitio y lleva `noindex`. Un solo usuario: `ADMIN_PASSWORD`.
+- Sesión en `src/lib/session.ts`: cookie `dyty_panel` (httpOnly, `path=/panel`, 7 días) con el vencimiento firmado
+  con HMAC (`SESSION_SECRET`, 32+ caracteres). Sin dependencias.
+- `isLoggedIn()` lee la cookie **antes** de cualquier otra cosa: si retorna antes, Next prerenderiza `/panel` en el
+  build como redirección al login (pasó). El listado vive dentro de `<Suspense>` (`cacheComponents`).
+- Login con freno de 5 intentos fallidos por IP cada 15 minutos (en memoria).
 
 ## Deploy (Dokploy)
 
 - `output: "standalone"` + `Dockerfile` multi-etapa (node:22-alpine), puerto **3000**.
 - `NEXT_PUBLIC_WHATSAPP_NUMBER` se incrusta al compilar: va como **Build Arg**, no solo como env.
 - `LEAD_WEBHOOK_URL` va como variable de entorno.
+- `ADMIN_PASSWORD` y `SESSION_SECRET` van como variables de entorno (sin ellas el panel no deja entrar).
+- **Volumen en `/app/data`** (Volume de Dokploy, no bind mount: así hereda los permisos del usuario `nextjs`).
+  Sin volumen, los leads se borran en cada deploy.
 - `public/` puede no existir en git (carpeta vacía); el Dockerfile la crea con `mkdir -p public`.
 - `.dockerignore` excluye `.claude`, `docs`, `CLAUDE.md` y `AGENTS.md` de la imagen.
 - Dominio `dyty.dev` (DNS en otra cuenta de Hostinger) apuntando con un registro A a `2.25.121.251`; HTTPS con
@@ -157,6 +170,8 @@ En movimiento manda `animate` / `emil-design-eng` sobre `frontend-design/referen
 
 ## Pendientes
 
-- Número real de WhatsApp (Build Arg en Dokploy), precios de Presencia y Ventas, confirmar `hola@dyty.dev`.
+- Correo: `dylanlara@dyty.dev`. WhatsApp: +591 62356328 (respaldo en `site.ts`; en Dokploy igual va como Build Arg).
+- Precios en bolivianos (`webPlans` + `plans` en `site.ts`), numerados [01]–[04] entre "Páginas web" y "Paquetes".
+  Solo Ventas lleva `featured` (tarjeta negra + "Recomendado").
 - "Plataformas educativas" se quedó sin caso tras quitar EXED.
 - Logo definitivo (el actual en `logo.tsx` es provisional).

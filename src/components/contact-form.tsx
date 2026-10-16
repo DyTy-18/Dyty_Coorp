@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { submitLead, type LeadState } from "@/app/actions";
+import { leadNeeds } from "@/lib/site";
 import { buttonClass } from "./ui";
 
 const initialState: LeadState = { ok: false, message: "" };
@@ -36,7 +37,7 @@ export function ContactForm() {
         </div>
         <div className="flex flex-[1_1_220px] flex-col gap-2">
           <label htmlFor="phone" className="label-mono">WhatsApp</label>
-          <input id="phone" name="phone" defaultValue={state.values?.phone} type="tel" autoComplete="tel" placeholder="+52 55 1234 5678" required aria-invalid={!!state.errors?.phone} aria-describedby="phone-error" className={field} />
+          <input id="phone" name="phone" defaultValue={state.values?.phone} type="tel" autoComplete="tel" placeholder="+591 7123 4567" required aria-invalid={!!state.errors?.phone} aria-describedby="phone-error" className={field} />
           {state.errors?.phone && <p id="phone-error" className="text-sm text-error">{state.errors.phone}</p>}
         </div>
       </div>
@@ -50,10 +51,9 @@ export function ContactForm() {
         <label htmlFor="need" className="label-mono">¿Qué necesitas?</label>
         <select id="need" name="need" defaultValue={state.values?.need ?? ""} required aria-invalid={!!state.errors?.need} aria-describedby="need-error" className={field}>
           <option value="" disabled>Elige una opción</option>
-          <option value="presencia">Una web nueva o más rápida (Presencia)</option>
-          <option value="ventas">Dejar de perder leads de mis anuncios (Ventas)</option>
-          <option value="sistema">Un CRM o sistema a medida</option>
-          <option value="no-se">No estoy seguro, quiero asesoría</option>
+          {leadNeeds.map((n) => (
+            <option key={n.value} value={n.value}>{n.label}</option>
+          ))}
         </select>
         {state.errors?.need && <p id="need-error" className="text-sm text-error">{state.errors.need}</p>}
       </div>

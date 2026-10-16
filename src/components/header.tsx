@@ -16,7 +16,7 @@ export function Header() {
           <Logo />
         </a>
 
-        <nav aria-label="Principal" className="hidden md:block">
+        <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-1 rounded-[48px] bg-paper p-1.5">
             {nav.map((item) => (
               <li key={item.href}>
@@ -41,7 +41,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls="menu-movil"
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            className="grid size-12 place-items-center rounded-full bg-paper md:hidden"
+            className="grid size-12 place-items-center rounded-full bg-paper lg:hidden"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -49,7 +49,7 @@ export function Header() {
       </div>
 
       {open && (
-        <nav id="menu-movil" aria-label="Móvil" className="mx-4 mb-4 rounded-[32px] bg-paper p-6 md:hidden">
+        <nav id="menu-movil" aria-label="Móvil" className="mx-4 mb-4 rounded-[32px] bg-paper p-6 lg:hidden">
           <ul className="flex flex-col">
             {nav.map((item) => (
               <li key={item.href}>

@@ -1,5 +1,8 @@
 "use server";
 
+import { saveLead } from "@/lib/leads";
+import { leadNeeds } from "@/lib/site";
+
 export type LeadState = {
   ok: boolean;
   message: string;
@@ -7,8 +10,6 @@ export type LeadState = {
   // Lo que escribió el usuario, para no vaciar el formulario si hay errores
   values?: Partial<Record<"name" | "phone" | "business" | "need" | "message", string>>;
 };
-
-const needs = ["presencia", "ventas", "sistema", "no-se"] as const;
 
 export async function submitLead(_prev: LeadState, formData: FormData): Promise<LeadState> {
   // Campo trampa para bots: los humanos no lo ven
@@ -29,29 +30,39 @@ export async function submitLead(_prev: LeadState, formData: FormData): Promise<
 
   const errors: LeadState["errors"] = {};
   if (lead.name.length < 2) errors.name = "Escribe tu nombre.";
-  if (lead.phone.replace(/\D/g, "").length < 8) errors.phone = "Escribe un WhatsApp válido, con lada.";
-  if (!needs.includes(lead.need as (typeof needs)[number])) errors.need = "Elige una opción.";
+  if (lead.phone.replace(/\D/g, "").length < 8) errors.phone = "Escribe un WhatsApp válido, con código de país.";
+  if (!leadNeeds.some((n) => n.value === lead.need)) errors.need = "Elige una opción.";
   const values = { name: lead.name, phone: lead.phone, business: lead.business, need: lead.need, message: lead.message };
   if (Object.keys(errors).length) return { ok: false, message: "Revisa los campos marcados.", errors, values };
 
-  const webhook = process.env.LEAD_WEBHOOK_URL;
-  if (!webhook) {
-    console.warn("[lead] LEAD_WEBHOOK_URL no configurado; lead recibido:", lead);
-    return { ok: true, message: "¡Gracias! Te escribimos pronto por WhatsApp." };
+  // Se guarda para el panel (/panel) y, si hay webhook, también se reenvía. Basta con que uno funcione.
+  let saved = false;
+  try {
+    await saveLead(lead);
+    saved = true;
+  } catch (err) {
+    console.error("[lead] no se pudo guardar:", err, lead);
   }
 
-  try {
-    const res = await fetch(webhook, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead),
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  } catch (err) {
-    console.error("[lead] error enviando al webhook:", err);
+  const webhook = process.env.LEAD_WEBHOOK_URL;
+  let sent = false;
+  if (webhook) {
+    try {
+      const res = await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lead),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      sent = true;
+    } catch (err) {
+      console.error("[lead] error enviando al webhook:", err);
+    }
+  }
+
+  if (!saved && !sent) {
     return { ok: false, message: "No pudimos enviar tu mensaje. Escríbenos directo por WhatsApp.", values };
   }
-
   return { ok: true, message: "¡Gracias! Te escribimos pronto por WhatsApp." };
 }
