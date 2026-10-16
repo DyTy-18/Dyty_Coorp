@@ -37,7 +37,7 @@ export function ContactForm() {
         </div>
         <div className="flex flex-[1_1_220px] flex-col gap-2">
           <label htmlFor="phone" className="label-mono">WhatsApp</label>
-          <input id="phone" name="phone" defaultValue={state.values?.phone} type="tel" autoComplete="tel" placeholder="+591 7123 4567" required aria-invalid={!!state.errors?.phone} aria-describedby="phone-error" className={field} />
+          <input id="phone" name="phone" defaultValue={state.values?.phone} type="tel" autoComplete="tel" placeholder="+591 XXXX XXXX" required aria-invalid={!!state.errors?.phone} aria-describedby="phone-error" className={field} />
           {state.errors?.phone && <p id="phone-error" className="text-sm text-error">{state.errors.phone}</p>}
         </div>
       </div>
