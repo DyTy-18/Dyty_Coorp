@@ -28,7 +28,8 @@ SplitText) + Lenis. Sin shadcn, sin Motion. La animación del hero es CSS; el sc
 - `src/components/`: una sección por archivo (`hero`, `lead-flow`, `sections`, `stack`, `contact`, `header`).
   `ui.tsx` tiene `ButtonLink`, `buttonClass` y `Tag`: úsalos en lugar de repetir clases.
 - `src/app/actions.ts`: Server Action del formulario de contacto.
-- `src/app/(sitio)/`: páginas públicas. Su `layout.tsx` carga Google Tag Manager (`GTM-NRN3CLR9`); las páginas
+- `src/app/(sitio)/`: páginas públicas. Su `layout.tsx` carga Google Tag Manager (`GTM-NRN3CLR9`) y GA4 (`G-QW9CP62ZTY`, en código: no duplicarlo
+  como etiqueta en GTM); las páginas
   públicas nuevas van aquí. `/panel` queda fuera a propósito: no se mide la administración.
 - `src/app/globals.css`: tokens del diseño (`@theme`), utilidades `display` y `label-mono`, keyframes.
 - `docs/`: listas de revisión de rendimiento y accesibilidad.
