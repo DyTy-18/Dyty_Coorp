@@ -28,9 +28,18 @@ SplitText) + Lenis. Sin shadcn, sin Motion. La animación del hero es CSS; el sc
 - `src/components/`: una sección por archivo (`hero`, `lead-flow`, `sections`, `stack`, `contact`, `header`).
   `ui.tsx` tiene `ButtonLink`, `buttonClass` y `Tag`: úsalos en lugar de repetir clases.
 - `src/app/actions.ts`: Server Action del formulario de contacto.
+- **Páginas de servicio con demo** (`/servicios/<slug>`): rutas estáticas en `src/app/(sitio)/servicios/`, una carpeta
+  por servicio (no `[slug]`: con `cacheComponents` no hay `dynamicParams`). Contenido en `servicePages` de `site.ts`,
+  molde en `service-page.tsx` y demo en `src/components/demos/` (cliente). En la tarjeta del servicio, `href` muestra
+  "Ver demo". `sitemap.ts` las toma solas de `servicePages`. Las demos usan **datos
+  ficticios y solo interfaz**: nada se guarda ni se envía. Hecha: gestión de proyectos. Pendientes: CRM + WhatsApp
+  y dashboards.
+- El menú apunta a `/#ancla` para que funcione desde las subpáginas.
 - `src/app/(sitio)/`: páginas públicas. Su `layout.tsx` carga Google Tag Manager (`GTM-NRN3CLR9`) y GA4 (`G-QW9CP62ZTY`, en código: no duplicarlo
   como etiqueta en GTM); las páginas
   públicas nuevas van aquí. `/panel` queda fuera a propósito: no se mide la administración.
+- Logo: `logo.tsx` usa `public/img/logos/logotipo-claro.png` (para fondos claros). Íconos: `src/app/favicon.ico`,
+  `icon.png` y `apple-icon.png` (isotipo). El verde del logo es de la marca: no lo uses como color de la interfaz.
 - `src/app/globals.css`: tokens del diseño (`@theme`), utilidades `display` y `label-mono`, keyframes.
 - `docs/`: listas de revisión de rendimiento y accesibilidad.
 
@@ -45,7 +54,7 @@ Fuente de verdad: los tokens de `globals.css`. Reglas:
   logo, correo, una barra). Nunca como relleno de superficies grandes.
 - **Tipografía:**
   - Display: clase `display` (Barlow Condensed 700, mayúsculas, interlineado 0.9, tracking -0.03em),
-    de 48 a 130px. Nunca por debajo de 48px. Excepciones intencionales: el logo (`logo.tsx`, 34px) y la palabra
+    de 48 a 130px. Nunca por debajo de 48px. Excepción intencional: la palabra
     gigante del footer (`contact.tsx`, hasta 30rem, `aria-hidden`).
   - Subtítulos: Geist 450 en mayúsculas, 28–40px.
   - Cuerpo: Geist 16px.
@@ -178,4 +187,3 @@ En movimiento manda `animate` / `emil-design-eng` sobre `frontend-design/referen
 - Precios en bolivianos (`webPlans` + `plans` en `site.ts`), numerados [01]–[04] entre "Páginas web" y "Paquetes".
   Solo Ventas lleva `featured` (tarjeta negra + "Recomendado").
 - "Plataformas educativas" se quedó sin caso tras quitar EXED.
-- Logo definitivo (el actual en `logo.tsx` es provisional).

@@ -127,6 +127,25 @@
   animation: blink 1s steps(1) infinite;
 }
 
+/* Tarjeta de una demo que aparece o cambia de columna (se vuelve a montar y entra de nuevo) */
+@keyframes demo-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+}
+
+.demo-in {
+  animation: demo-in 220ms var(--ease-out) both;
+}
+
+/* Mientras se arrastra una tarjeta de la demo: sin selección de texto y con cursor de agarre */
+.demo-dragging,
+.demo-dragging * {
+  user-select: none;
+  cursor: grabbing !important;
+}
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
@@ -141,7 +160,8 @@
     --on: 1;
   }
   .hero-in,
-  .cursor-blink {
+  .cursor-blink,
+  .demo-in {
     animation: none;
   }
   .flow-dot,

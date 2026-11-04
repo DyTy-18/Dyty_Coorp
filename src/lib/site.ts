@@ -24,12 +24,12 @@ export function whatsappLink(text = "Hola dyty, quiero información sobre sus se
 }
 
 export const nav = [
-  { href: "#servicios", label: "Servicios" },
-  { href: "#webs", label: "Webs" },
-  { href: "#paquetes", label: "Paquetes" },
-  { href: "#casos", label: "Casos" },
-  { href: "#desarrollo", label: "Desarrollo" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/#servicios", label: "Servicios" },
+  { href: "/#webs", label: "Webs" },
+  { href: "/#paquetes", label: "Paquetes" },
+  { href: "/#casos", label: "Casos" },
+  { href: "/#desarrollo", label: "Desarrollo" },
+  { href: "/#contacto", label: "Contacto" },
 ];
 
 export type Scene = "crm" | "leads" | "web" | "dashboard" | "payments" | "lms" | "hosting" | "projects";
@@ -40,6 +40,7 @@ export type Service = {
   description: string;
   cases: string[];
   wide?: boolean;
+  href?: string; // página propia con demo (ver servicePages)
 };
 
 export const services: Service[] = [
@@ -78,6 +79,7 @@ export const services: Service[] = [
     description:
       "Tableros para tu equipo: quién hace qué, en qué estado va cada tarea y notas en cada una. Hecho a la medida de cómo trabajan.",
     cases: ["Otium"],
+    href: "/servicios/gestion-de-proyectos",
   },
   {
     title: "Hosting y mantenimiento",
@@ -235,3 +237,78 @@ export const principles = [
   { title: "Tuyo desde el día uno", detail: "El código y los datos son tuyos. Sin amarres a una plataforma." },
   { title: "Rápido por defecto", detail: "Medimos Core Web Vitals y tiempos de respuesta antes de entregar." },
 ];
+
+// Páginas propias de cada servicio, con demo. La demo usa datos de ejemplo y solo muestra la interfaz:
+// nada se guarda ni se envía.
+export type ServicePage = {
+  slug: string;
+  service: string; // nombre corto, para la miga de pan y el título de la pestaña
+  title: string; // h1
+  titleAccent?: string; // remate del h1, en gris
+  metaDescription: string;
+  intro: string;
+  price: string;
+  includes: { title: string; detail: string }[];
+  caseStudy?: { client: string; summary: string };
+  faqs: { q: string; a: string }[];
+  whatsappText: string;
+};
+
+export const servicePages = {
+  projects: {
+    slug: "gestion-de-proyectos",
+    service: "Gestión de proyectos",
+    title: "Menos seguimiento, más resultados.",
+    titleAccent: "Cada tarea en su lugar.",
+    metaDescription:
+      "Software de gestión de proyectos a medida para negocios en Bolivia: tareas con responsable, estado y notas. Prueba la demo con datos de ejemplo.",
+    intro:
+      "Un tablero hecho para tu negocio. Cada tarea tiene su responsable, su estado y sus notas, y nadie tiene que preguntar en el grupo de WhatsApp en qué va cada cosa.",
+    price: "Desde Bs 6.000",
+    includes: [
+      {
+        title: "Tableros a tu medida",
+        detail: "Por proyecto, por cliente o por área, con las columnas que usa tu equipo y no las de una plantilla.",
+      },
+      {
+        title: "Responsable y fecha",
+        detail: "Cada tarea tiene dueño y fecha de entrega. Lo atrasado se ve de un vistazo.",
+      },
+      {
+        title: "Notas en cada tarea",
+        detail: "Avances, pendientes y acuerdos quedan escritos en la tarea, no perdidos en un chat.",
+      },
+      {
+        title: "Desde el celular",
+        detail: "Funciona en el navegador, en la compu o en el teléfono. No hay que instalar nada.",
+      },
+      {
+        title: "Una cuenta por persona",
+        detail: "Cada uno entra con su usuario y ve lo que le toca.",
+      },
+      {
+        title: "En tu servidor",
+        detail: "El sistema y los datos son tuyos. Lo alojamos en Hostinger, a tu nombre.",
+      },
+    ],
+    faqs: [
+      {
+        q: "¿Por qué no usar Trello o Asana?",
+        a: "Para empezar sirven. Conviene uno propio cuando necesitas que el tablero siga los pasos de tu negocio, que se conecte con tu CRM o tu WhatsApp, o cuando ya no quieres pagar una licencia por cada usuario.",
+      },
+      {
+        q: "¿Cuánto tarda?",
+        a: "Depende de cuántos tableros y pasos tenga tu proceso. Antes de empezar lo revisamos juntos y te damos una fecha de entrega.",
+      },
+      {
+        q: "¿Se puede usar desde el celular?",
+        a: "Sí. Es una web, así que funciona en cualquier navegador sin instalar nada.",
+      },
+      {
+        q: "¿De quién son los datos?",
+        a: "Tuyos. El sistema corre en un servidor a tu nombre y puedes llevarte el código y los datos cuando quieras.",
+      },
+    ],
+    whatsappText: "Hola dyty, vi la demo de gestión de proyectos y quiero algo así para mi negocio.",
+  },
+} satisfies Record<string, ServicePage>;

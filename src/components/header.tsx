@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { nav, whatsappLink } from "@/lib/site";
@@ -12,9 +13,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-canvas/90 backdrop-blur-sm">
       <div className="mx-auto flex h-24 max-w-[1200px] items-center justify-between gap-4 px-4 md:px-6">
-        <a href="#inicio" aria-label="dyty, ir al inicio">
+        <Link href="/#inicio" aria-label="dyty, ir al inicio">
           <Logo />
-        </a>
+        </Link>
 
         <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-1 rounded-[48px] bg-paper p-1.5">

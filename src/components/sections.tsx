@@ -52,12 +52,26 @@ export function Services() {
                     <h3 className="mt-4 text-[28px] leading-[1.1] font-[450] tracking-[-0.03em] uppercase">{s.title}</h3>
                     <p className={`mt-4 max-w-md ${dark ? "text-smoke" : "text-slate"}`}>{s.description}</p>
                   </div>
-                  {s.cases.length > 0 && (
-                    <p className="flex flex-wrap gap-2">
-                      {s.cases.map((c) => (
-                        <Tag key={c}>{c}</Tag>
-                      ))}
-                    </p>
+                  {(s.cases.length > 0 || s.href) && (
+                    <div className="flex flex-wrap items-center justify-between gap-4">
+                      {s.cases.length > 0 && (
+                        <p className="flex flex-wrap gap-2">
+                          {s.cases.map((c) => (
+                            <Tag key={c}>{c}</Tag>
+                          ))}
+                        </p>
+                      )}
+                      {s.href && (
+                        <a
+                          href={s.href}
+                          className={`inline-flex min-h-11 items-center gap-1.5 font-medium underline-offset-4 hover:underline ${dark ? "text-paper" : "text-carbon"}`}
+                        >
+                          Ver demo
+                          <ArrowUpRight size={18} aria-hidden="true" />
+                          <span className="sr-only">de {s.title.toLowerCase()}</span>
+                        </a>
+                      )}
+                    </div>
                   )}
                 </div>
               </li>
