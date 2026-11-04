@@ -1,4 +1,6 @@
+import Image from "next/image";
 import type { ComponentProps } from "react";
+import { hostinger } from "@/lib/site";
 
 // Botones del sistema: planos, radio pequeño (4–8px), sin sombras.
 const variants = {
@@ -15,6 +17,20 @@ export function buttonClass(variant: Variant = "dark", extra = "") {
 
 export function ButtonLink({ variant = "dark", className = "", ...props }: ComponentProps<"a"> & { variant?: Variant }) {
   return <a className={buttonClass(variant, className)} {...props} />;
+}
+
+// Sello de Hostinger Partner: siempre enlaza a nuestro link de referido.
+export function HostingerBadge({ className = "", imageClassName = "" }: { className?: string; imageClassName?: string }) {
+  return (
+    <a
+      href={hostinger.url}
+      target="_blank"
+      rel="noopener sponsored"
+      className={`inline-block rounded-xl transition-[scale] duration-150 ease-out active:scale-[0.97] ${className}`}
+    >
+      <Image src={hostinger.badge} alt={hostinger.alt} width={160} height={60} className={`h-auto ${imageClassName}`} />
+    </a>
+  );
 }
 
 export function Tag({ children, className = "" }: { children: React.ReactNode; className?: string }) {

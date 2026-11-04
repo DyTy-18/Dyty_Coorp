@@ -132,7 +132,8 @@ contra bots.
 - `ADMIN_PASSWORD` y `SESSION_SECRET` van como variables de entorno (sin ellas el panel no deja entrar).
 - **Volumen en `/app/data`** (Volume de Dokploy, no bind mount: así hereda los permisos del usuario `nextjs`).
   Sin volumen, los leads se borran en cada deploy.
-- `public/` puede no existir en git (carpeta vacía); el Dockerfile la crea con `mkdir -p public`.
+- Imágenes en `public/img/` (se sirven como `/img/archivo.webp`; usa `next/image`). El `.gitkeep` mantiene la
+  carpeta en git; el Dockerfile igual crea `public` con `mkdir -p public`.
 - `.dockerignore` excluye `.claude`, `docs`, `CLAUDE.md` y `AGENTS.md` de la imagen.
 - Dominio `dyty.dev` (DNS en otra cuenta de Hostinger) apuntando con un registro A a `2.25.121.251`; HTTPS con
   Let's Encrypt en Dokploy.

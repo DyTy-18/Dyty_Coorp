@@ -1,7 +1,7 @@
 import { ArrowUpRight, Check } from "lucide-react";
 import { cases, plans, services, tools, webPlans, whatsappLink, type Plan } from "@/lib/site";
 import { ServiceScene } from "./service-scenes";
-import { ButtonLink, Tag } from "./ui";
+import { ButtonLink, HostingerBadge, Tag } from "./ui";
 
 const pad = (n: number) => String(n + 1).padStart(2, "0");
 
@@ -32,7 +32,7 @@ export function Services() {
       <div className="mx-auto max-w-[1200px] px-4 pb-20 md:px-6 md:pb-24">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <h2 data-reveal="title" className="display text-[clamp(3rem,7vw,5rem)]">Servicios</h2>
-          <p className="max-w-sm text-slate">Seis piezas que se conectan entre sí. Empieza por una y suma las demás.</p>
+          <p className="max-w-sm text-slate">Siete piezas que se conectan entre sí. Empieza por una y suma las demás.</p>
         </div>
 
         <ul data-reveal="stagger" className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -166,6 +166,13 @@ export function Webs() {
               <li>El hosting y el dominio se pagan aparte, a tu nombre.</li>
               <li>Precios en bolivianos. Si estás fuera de Bolivia, te cotizamos en dólares.</li>
             </ul>
+            <div className="mt-8 flex max-w-sm flex-col items-start gap-4 rounded-[32px] bg-carbon p-6 text-paper">
+              <HostingerBadge />
+              <p className="text-sm text-smoke">
+                Somos partners de Hostinger. Te ayudamos a elegir el plan, lo contratas a tu nombre y nosotros dejamos
+                todo configurado: dominio, correo y SSL.
+              </p>
+            </div>
           </div>
 
           <ul data-reveal="stagger" className="flex flex-wrap gap-4">

@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { nav, site, whatsappLink } from "@/lib/site";
 import { ContactForm } from "./contact-form";
-import { ButtonLink } from "./ui";
+import { ButtonLink, HostingerBadge } from "./ui";
 
 export function Contact() {
   return (
@@ -35,7 +35,10 @@ export function Footer() {
   return (
     <footer className="overflow-hidden bg-carbon text-paper">
       <div className="mx-auto flex max-w-[1200px] flex-wrap items-start justify-between gap-8 px-4 pt-16 md:px-6">
-        <p className="max-w-xs text-sm text-smoke">{site.description}</p>
+        <div className="flex max-w-xs flex-col items-start gap-6">
+          <p className="text-sm text-smoke">{site.description}</p>
+          <HostingerBadge />
+        </div>
         <nav aria-label="Pie de página">
           <ul className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
             {nav.map((item) => (

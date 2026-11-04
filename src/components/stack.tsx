@@ -73,21 +73,24 @@ export function Stack() {
             <span className="label-mono text-smoke">Lead de Meta → CRM → WhatsApp</span>
             <CodeXml size={18} className="text-smoke" aria-hidden="true" />
           </figcaption>
-          <pre className="flex-1 overflow-x-auto p-6 font-mono text-[13px] leading-[1.7]">
+          {/* En móvil las líneas largas saltan (sin scroll lateral); desde sm el código va en una sola línea */}
+          <pre className="flex-1 overflow-x-auto p-4 font-mono text-[12px] leading-[1.7] whitespace-pre-wrap sm:p-6 sm:text-[13px] sm:whitespace-pre">
             <code>
               {code.map((line, i) => (
-                <span key={i} className="block min-h-[1.7em]">
-                  <span aria-hidden="true" className="mr-5 inline-block w-5 text-right text-smoke/50 select-none">
+                <span key={i} className="flex min-h-[1.7em]">
+                  <span aria-hidden="true" className="mr-3 w-5 shrink-0 text-right text-smoke/50 select-none sm:mr-5">
                     {i + 1}
                   </span>
-                  {line.map(([kind, text], j) => (
-                    <span key={j} className={tokenClass[kind]}>
-                      {text}
-                    </span>
-                  ))}
-                  {i === code.length - 1 && (
-                    <span aria-hidden="true" className="cursor-blink ml-1 inline-block h-[1.1em] w-2 translate-y-[3px] bg-mint" />
-                  )}
+                  <span className="min-w-0 flex-1 [overflow-wrap:anywhere] sm:[overflow-wrap:normal]">
+                    {line.map(([kind, text], j) => (
+                      <span key={j} className={tokenClass[kind]}>
+                        {text}
+                      </span>
+                    ))}
+                    {i === code.length - 1 && (
+                      <span aria-hidden="true" className="cursor-blink ml-1 inline-block h-[1.1em] w-2 translate-y-[3px] bg-mint" />
+                    )}
+                  </span>
                 </span>
               ))}
             </code>
@@ -125,10 +128,14 @@ export function Stack() {
         </ol>
       </div>
 
-      <ul data-reveal="stagger" className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+      <ul data-reveal="stagger" className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-6">
         {stack.map((group, i) => (
-          <li key={group.area} className={`rounded-[32px] bg-paper p-6 md:p-8 ${spans[i] ?? "lg:col-span-2"}`}>
-            <div className="flex items-start justify-between gap-4">
+          <li
+            key={group.area}
+            className={`min-w-0 rounded-[32px] bg-paper px-4 py-6 sm:p-6 md:p-8 ${spans[i] ?? "lg:col-span-2"}`}
+          >
+            {/* En móvil el ícono va arriba: "Infraestructura" a 48px no entra al lado del ícono en 375px */}
+            <div className="flex flex-col-reverse items-start gap-4 sm:flex-row sm:justify-between">
               <h3 className="display text-5xl">{group.area}</h3>
               <AreaIcon icon={areaIcons[i]} />
             </div>

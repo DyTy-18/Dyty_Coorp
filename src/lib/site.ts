@@ -12,6 +12,13 @@ export const site = {
   whatsappNumber,
 };
 
+// Programa de socios de Hostinger: `url` es nuestro link de referido.
+export const hostinger = {
+  url: "https://www.hostinger.com/es?REFERRALCODE=JTDLARA12VDK",
+  badge: "/img/hostinger/partner-640x240.png",
+  alt: "Hostinger Partner",
+};
+
 export function whatsappLink(text = "Hola dyty, quiero información sobre sus servicios.") {
   return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(text)}`;
 }
@@ -25,7 +32,7 @@ export const nav = [
   { href: "#contacto", label: "Contacto" },
 ];
 
-export type Scene = "crm" | "leads" | "web" | "dashboard" | "payments" | "lms" | "hosting";
+export type Scene = "crm" | "leads" | "web" | "dashboard" | "payments" | "lms" | "hosting" | "projects";
 
 export type Service = {
   title: string;
@@ -64,12 +71,19 @@ export const services: Service[] = [
     description:
       "Excel, CRM y plataformas en un solo panel: ventas, alumnos y rendimiento por sucursal. Todo en un dashboard web propio.",
     cases: ["Otium", "Cristina Spa"],
-    wide: true,
+  },
+  {
+    title: "Software de gestión de proyectos",
+    scene: "projects",
+    description:
+      "Tableros para tu equipo: quién hace qué, en qué estado va cada tarea y notas en cada una. Hecho a la medida de cómo trabajan.",
+    cases: ["Otium"],
   },
   {
     title: "Hosting y mantenimiento",
     scene: "hosting",
-    description: "Alojamiento, actualizaciones, respaldos y monitoreo de tu sitio o sistema cada mes.",
+    description:
+      "Somos partners de Hostinger: tu sitio o sistema alojado ahí, con actualizaciones, respaldos y monitoreo cada mes.",
     cases: [],
     wide: true,
   },

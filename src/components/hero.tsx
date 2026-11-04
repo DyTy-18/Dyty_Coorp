@@ -1,7 +1,7 @@
 import { ArrowDown, MessageCircle } from "lucide-react";
 import { whatsappLink } from "@/lib/site";
 import { LeadFlow } from "./lead-flow";
-import { ButtonLink } from "./ui";
+import { ButtonLink, HostingerBadge } from "./ui";
 
 export function Hero() {
   return (
@@ -26,6 +26,7 @@ export function Hero() {
               <ArrowDown size={18} aria-hidden="true" />
             </ButtonLink>
           </div>
+          <HostingerBadge className="hero-in mt-8 [--d:340ms]" imageClassName="w-32 sm:w-40" />
         </div>
 
         <div className="hero-in min-w-0 flex-[1_1_400px] [--d:360ms]">

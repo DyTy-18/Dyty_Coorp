@@ -227,6 +227,31 @@ function HostingScene({ dark }: Tone) {
   );
 }
 
+// Tablero de 3 columnas (por hacer → en curso → hecho). La tarjeta destacada queda en "hecho"; la timeline la trae
+// desde la primera columna. La segunda fila de las otras columnas queda vacía para que pase sin tapar nada.
+function ProjectsScene({ dark }: Tone) {
+  const column = dark ? "bg-carbon" : "bg-canvas";
+  const card = dark ? "bg-graphite" : "bg-paper";
+  const header = dark ? "bg-slate" : "bg-ash";
+  return (
+    <div className="grid w-full max-w-xs grid-cols-3 gap-2">
+      {[0, 1, 2].map((col) => (
+        <div key={col} data-s="col" className={`flex flex-col gap-1.5 rounded-xl p-2 ${column}`}>
+          <span className={`mb-1 h-1.5 w-8 rounded-full ${header}`} />
+          <span className={`h-6 rounded-md ${card}`} />
+          {col === 2 ? (
+            <span data-s="card" className={`relative h-6 rounded-md ${dark ? "bg-paper" : "bg-carbon"}`}>
+              <Badge>{check}</Badge>
+            </span>
+          ) : (
+            <span className="h-6" />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 const scenes: Record<Scene, (props: Tone) => React.JSX.Element> = {
   crm: CrmScene,
   leads: LeadsScene,
@@ -235,6 +260,7 @@ const scenes: Record<Scene, (props: Tone) => React.JSX.Element> = {
   payments: PaymentsScene,
   lms: LmsScene,
   hosting: HostingScene,
+  projects: ProjectsScene,
 };
 
 export function ServiceScene({ scene, dark = false }: { scene: Scene; dark?: boolean }) {

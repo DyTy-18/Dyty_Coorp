@@ -87,6 +87,18 @@ const builds: Record<Scene | "pipeline", (tl: Tl, q: Q) => void> = {
     tl.from(q("badge"), badgeIn, "<");
   },
 
+  projects(tl, q) {
+    const [card] = q("card");
+    // Una columna = su ancho + el gap-2 (8px) del tablero.
+    const step = () => (card.parentElement?.offsetWidth ?? 0) + 8;
+    tl.set(card, { x: () => -2 * step(), opacity: 0, scale: 0.95 }, 0)
+      .from(q("col"), { ...pop, stagger: 0.08 })
+      .to(card, { opacity: 1, scale: 1, duration: 0.3 })
+      .to(card, { x: () => -step(), duration: 0.6, ease: easeInOut }, "+=0.4")
+      .to(card, { x: 0, duration: 0.6, ease: easeInOut }, "+=0.4")
+      .from(q("badge"), badgeIn);
+  },
+
   hosting(tl, q) {
     tl.from(q("node"), pop)
       .fromTo(q("ring"), { scale: 1, opacity: 0.6 }, { scale: 1.5, opacity: 0, duration: 1, repeat: 1, immediateRender: false })
